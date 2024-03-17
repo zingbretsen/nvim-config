@@ -837,9 +837,6 @@ vim.api.nvim_create_autocmd('VimLeavePre', {
 local neogit = require 'neogit'
 neogit.setup {
   disable_signs = false,
-  disable_context_highlighting = false,
-  disable_commit_confirmation = false,
-  -- customize here
 }
 
 vim.keymap.set('n', '<leader>gg', neogit.open)
