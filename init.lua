@@ -783,6 +783,7 @@ vim.keymap.set('n', '<leader>sl', resession.load)
 vim.keymap.set('n', '<leader>sx', resession.delete)
 
 vim.keymap.set('n', '<leader>qq', ':qa<CR>', { desc = 'Quit' })
+vim.keymap.set('n', '<leader>ww', ':w<CR>', { desc = 'Save' })
 
 vim.api.nvim_create_autocmd('VimLeavePre', {
   callback = function()
