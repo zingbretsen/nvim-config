@@ -18,32 +18,16 @@ vim.g.maplocalleader = ' '
 -- Set to true if you have a Nerd Font installed
 vim.g.have_nerd_font = false
 
--- [[ Setting options ]]
 -- See `:help vim.opt`
 -- NOTE: You can change these options as you wish!
 --  For more options, you can see `:help option-list`
 
 -- Make line numbers default
 vim.opt.number = true
--- You can also add relative line numbers, for help with jumping.
---  Experiment for yourself to see if you like it!
--- vim.opt.relativenumber = true
-
--- Enable mouse mode, can be useful for resizing splits for example!
 vim.opt.mouse = 'a'
-
--- Don't show the mode, since it's already in status line
 vim.opt.showmode = false
-
--- Sync clipboard between OS and Neovim.
---  Remove this option if you want your OS clipboard to remain independent.
---  See `:help 'clipboard'`
 vim.opt.clipboard = 'unnamedplus'
-
--- Enable break indent
 vim.opt.breakindent = true
-
--- Save undo history
 vim.opt.undofile = true
 
 -- Case-insensitive searching UNLESS \C or capital in search
@@ -783,7 +767,12 @@ vim.keymap.set('n', '<leader>sl', resession.load)
 vim.keymap.set('n', '<leader>sx', resession.delete)
 
 vim.keymap.set('n', '<leader>qq', ':qa<CR>', { desc = 'Quit' })
+vim.keymap.set('n', '<leader>fe', ':e .<CR>', { desc = 'File Explorer' })
 vim.keymap.set('n', '<leader>ww', ':w<CR>', { desc = 'Save' })
+vim.keymap.set('n', '<leader>wq', ':wq<CR>', { desc = 'Save Quit' })
+vim.keymap.set('n', '<leader>bn', ':bn<CR>', { desc = 'Buffer Next' })
+vim.keymap.set('n', '<leader>bp', ':bp<CR>', { desc = 'Buffer Prev' })
+vim.keymap.set('n', '<leader>bd', ':bd<CR>', { desc = 'Buffer Delete' })
 
 vim.api.nvim_create_autocmd('VimLeavePre', {
   callback = function()
