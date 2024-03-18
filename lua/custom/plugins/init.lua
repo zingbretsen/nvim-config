@@ -5,7 +5,7 @@ return {
     dependencies = { 'nvim-lua/plenary.nvim' },
     config = function() -- This is the function that runs, AFTER loading
       local harpoon = require 'harpoon'
-      harpoon:setup()
+      harpoon:setup {}
 
       vim.keymap.set('n', '<leader>x', function()
         harpoon:list():append()
