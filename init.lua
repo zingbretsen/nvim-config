@@ -791,5 +791,4 @@ neogit.setup {
 
 vim.keymap.set('n', '<leader>gg', neogit.open)
 
--- set autochdir
-vim.opt.autochdir = true
+vim.opt.autochdir = false
