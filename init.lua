@@ -775,6 +775,9 @@ vim.keymap.set('n', '<leader>bn', ':bn<CR>', { desc = 'Buffer Next' })
 vim.keymap.set('n', '<leader>bp', ':bp<CR>', { desc = 'Buffer Prev' })
 vim.keymap.set('n', '<leader>bd', ':bd<CR>', { desc = 'Buffer Delete' })
 
+vim.keymap.set({ 'n', 'v' }, ':', ';', { silent = false })
+vim.keymap.set({ 'n', 'v' }, ';', ':', { silent = false })
+
 vim.api.nvim_create_autocmd('VimLeavePre', {
   callback = function()
     resession.save 'last'
