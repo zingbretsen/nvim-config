@@ -768,7 +768,7 @@ vim.keymap.set('n', '<leader>sl', resession.load)
 vim.keymap.set('n', '<leader>sx', resession.delete)
 
 vim.keymap.set('n', '<leader>qq', ':qa<CR>', { desc = 'Quit' })
-vim.keymap.set('n', '<leader>fe', ':e .<CR>', { desc = 'File Explorer' })
+vim.keymap.set('n', '<leader>fe', ':e %:h<CR>', { desc = 'File Explorer' })
 vim.keymap.set('n', '<leader>ww', ':w<CR>', { desc = 'Save' })
 vim.keymap.set('n', '<leader>wq', ':wq<CR>', { desc = 'Save Quit' })
 vim.keymap.set('n', '<leader>bn', ':bn<CR>', { desc = 'Buffer Next' })
