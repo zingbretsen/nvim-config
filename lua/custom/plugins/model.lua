@@ -1,7 +1,9 @@
 return {
   {
     'gsuuon/model.nvim',
+
     cmd = { 'M', 'Model', 'Mchat' },
+
     init = function()
       vim.filetype.add {
         extension = {
@@ -9,12 +11,17 @@ return {
         },
       }
     end,
+
     ft = 'mchat',
 
-    keys = {
-      { '<C-m>d', ':Mdelete<cr>', mode = 'n' },
-      { '<C-m>s', ':Mselect<cr>', mode = 'n' },
-      { '<C-m><space>', ':Mchat<cr>', mode = 'n' },
-    },
+    -- keys = {
+    --   { '<C-m>d', ':Mdelete<cr>', mode = 'n' },
+    --   { '<C-m>s', ':Mselect<cr>', mode = 'n' },
+    --   { '<C-m><space>', ':Mchat<cr>', mode = 'n' },
+    -- },
+
+    config = function ()
+    end
   },
+
 }

@@ -1,22 +1,8 @@
---[[
-
-      - https://learnxinyminutes.com/docs/lua/
-    - :help lua-guide
-    - (or HTML version): https://neovim.io/doc/user/lua-guide.html
-
-Kickstart Guide:
-
-  Next, run AND READ `:help`.
-    MOST IMPORTANTLY, we provide a keymap "<space>sh" to [s]earch the [h]elp documentation,
-If you experience any errors while trying to install kickstart, run `:checkhealth` for more info
-
---]]
-
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 -- Set to true if you have a Nerd Font installed
-vim.g.have_nerd_font = false
+vim.g.have_nerd_font = vim.fn.has 'mac' == 1
 
 -- See `:help vim.opt`
 -- NOTE: You can change these options as you wish!
@@ -134,6 +120,9 @@ vim.opt.rtp:prepend(lazypath)
 --
 -- NOTE: Here is where you install your plugins.
 require('lazy').setup({
+  -- Seems to be required for debuggingpInstall
+  'nvim-neotest/nvim-nio',
+
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
 
@@ -168,6 +157,7 @@ require('lazy').setup({
   },
   {
     'NeogitOrg/neogit',
+    branch = 'master',
     dependencies = {
       'nvim-lua/plenary.nvim', -- required
       'sindrets/diffview.nvim', -- optional - Diff integration
@@ -190,21 +180,61 @@ require('lazy').setup({
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     opts = {},
   },
-  {
+  { -- Useful plugin to show you pending keybinds.
     'folke/which-key.nvim',
-    event = 'VimEnter',
-    config = function() -- This is the function that runs, AFTER loading
-      require('which-key').setup()
+    event = 'VimEnter', -- Sets the loading event to 'VimEnter'
+    opts = {
+      icons = {
+        -- set icon mappings to true if you have a Nerd Font
+        mappings = vim.g.have_nerd_font,
+        -- If you are using a Nerd Font: set icons.keys to an empty table which will use the
+        -- default whick-key.nvim defined Nerd Font icons, otherwise define a string table
+        keys = vim.g.have_nerd_font and {} or {
+          Up = '<Up> ',
+          Down = '<Down> ',
+          Left = '<Left> ',
+          Right = '<Right> ',
+          C = '<C-…> ',
+          M = '<M-…> ',
+          D = '<D-…> ',
+          S = '<S-…> ',
+          CR = '<CR> ',
+          Esc = '<Esc> ',
+          ScrollWheelDown = '<ScrollWheelDown> ',
+          ScrollWheelUp = '<ScrollWheelUp> ',
+          NL = '<NL> ',
+          BS = '<BS> ',
+          Space = '<Space> ',
+          Tab = '<Tab> ',
+          F1 = '<F1>',
+          F2 = '<F2>',
+          F3 = '<F3>',
+          F4 = '<F4>',
+          F5 = '<F5>',
+          F6 = '<F6>',
+          F7 = '<F7>',
+          F8 = '<F8>',
+          F9 = '<F9>',
+          F10 = '<F10>',
+          F11 = '<F11>',
+          F12 = '<F12>',
+        },
+      },
 
       -- Document existing key chains
-      require('which-key').register {
-        ['<leader>c'] = { name = '[C]ode', _ = 'which_key_ignore' },
-        ['<leader>d'] = { name = '[D]ocument', _ = 'which_key_ignore' },
-        ['<leader>r'] = { name = '[R]ename', _ = 'which_key_ignore' },
-        ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
-        ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
-      }
-    end,
+      spec = {
+        { '<leader>c', group = '[C]ode', mode = { 'n', 'x' } },
+        { '<leader>d', group = '[D]ocument' },
+        { '<leader>f', group = '[F]ile' },
+        { '<leader>g', group = '[G]it' },
+        { '<leader>r', group = '[R]ename' },
+        { '<leader>m', group = '[M]odel Chat' },
+        { '<leader>s', group = '[S]earch' },
+        { '<leader>w', group = '[W]orkspace' },
+        -- { '<leader>t', group = '[T]oggle' },
+        -- { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
+      },
+    },
   },
 
   { -- Fuzzy Finder (files, lsp, etc)
@@ -229,6 +259,7 @@ require('lazy').setup({
       { 'nvim-telescope/telescope-ui-select.nvim' },
 
       -- Useful for getting pretty icons, but requires a Nerd Font.
+      -- { 'nvim-tree/nvim-web-devicons' },
       { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
     },
     config = function()
@@ -503,7 +534,7 @@ require('lazy').setup({
       formatters_by_ft = {
         lua = { 'stylua' },
         -- Conform can also run multiple formatters sequentially
-        -- python = { "isort", "black" },
+        python = { 'isort', 'black' },
         --
         -- You can use a sub-list to tell conform to run *until* a formatter
         -- is found.
@@ -647,14 +678,14 @@ require('lazy').setup({
       --  - va)  - [V]isually select [A]round [)]paren
       --  - yinq - [Y]ank [I]nside [N]ext [']quote
       --  - ci'  - [C]hange [I]nside [']quote
-      require('mini.ai').setup { n_lines = 500 }
+      -- require('mini.ai').setup { n_lines = 500 }
 
       -- Add/delete/replace surroundings (brackets, quotes, etc.)
       --
       -- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
       -- - sd'   - [S]urround [D]elete [']quotes
       -- - sr)'  - [S]urround [R]eplace [)] [']
-      require('mini.surround').setup()
+      -- require('mini.surround').setup()
 
       require('mini.pairs').setup()
       -- require('mini.completion').setup {
@@ -717,7 +748,7 @@ require('lazy').setup({
   --  Here are some example plugins that I've included in the kickstart repository.
   --  Uncomment any of the lines below to enable them (you will need to restart nvim).
   --
-  -- require 'kickstart.plugins.debug',
+  require 'kickstart.plugins.debug',
   -- require 'kickstart.plugins.indent_line',
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
@@ -769,7 +800,7 @@ vim.keymap.set('n', '<leader>ss', resession.save)
 vim.keymap.set('n', '<leader>sl', resession.load)
 vim.keymap.set('n', '<leader>sx', resession.delete)
 
-vim.keymap.set('n', '<leader>qq', ':qa<CR>', { desc = 'Quit' })
+-- vim.keymap.set('n', '<leader>qq', ':qa<CR>', { desc = 'Quit' })
 vim.keymap.set('n', '<leader>fe', ':e %:h<CR>', { desc = 'File Explorer' })
 vim.keymap.set('n', '<leader>ww', ':w<CR>', { desc = 'Save' })
 vim.keymap.set('n', '<leader>wq', ':wq<CR>', { desc = 'Save Quit' })
@@ -791,11 +822,11 @@ neogit.setup {
   disable_signs = false,
 }
 
-vim.keymap.set('n', '<leader>gg', neogit.open)
+vim.keymap.set('n', '<leader>gg', neogit.open, { desc = 'Neo[G]it' })
 
 vim.opt.autochdir = false
 
-vim.keymap.set({ 'n' }, '<leader>mn', ':Mchat gpt4', { desc = 'Mchat new' })
-vim.keymap.set({ 'n' }, '<leader>mc', ':Mchat<CR>', { desc = 'Mchat send' })
-vim.keymap.set({ 'n' }, '<leader>ms', ':Mselect<CR>', { desc = 'Mchat select' })
-vim.keymap.set({ 'n' }, '<leader>md', ':Mdelete<CR>', { desc = 'Mchat delete' })
+vim.keymap.set({ 'n' }, '<leader>mn', ':Mchat gpt4', { desc = '[M]chat [N]ew' })
+vim.keymap.set({ 'n' }, '<leader>mc', ':Mchat<CR>', { desc = '[M]chat [S]end' })
+vim.keymap.set({ 'n' }, '<leader>ms', ':Mselect<CR>', { desc = '[M]chat [S]elect' })
+vim.keymap.set({ 'n' }, '<leader>md', ':Mdelete<CR>', { desc = '[M]chat [D]elete' })
