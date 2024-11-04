@@ -657,7 +657,9 @@ require('lazy').setup({
       require('mini.surround').setup()
 
       require('mini.pairs').setup()
-
+      -- require('mini.completion').setup {
+      --   lsp_completion = { source_func = 'omnifunc', auto_setup = false },
+      -- }
       -- Simple and easy statusline.
       --  You could remove this setup call if you don't like it,
       --  and try some other statusline plugin
@@ -679,7 +681,7 @@ require('lazy').setup({
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
     opts = {
-      ensure_installed = { 'bash', 'c', 'html', 'lua', 'markdown', 'vim', 'vimdoc' },
+      ensure_installed = { 'bash', 'html', 'javascript', 'typescript', 'lua', 'markdown', 'python', 'vim', 'vimdoc' },
       -- Autoinstall languages that are not installed
       auto_install = true,
       highlight = {
@@ -792,3 +794,8 @@ neogit.setup {
 vim.keymap.set('n', '<leader>gg', neogit.open)
 
 vim.opt.autochdir = false
+
+vim.keymap.set({ 'n' }, '<leader>mn', ':Mchat gpt4', { desc = 'Mchat new' })
+vim.keymap.set({ 'n' }, '<leader>mc', ':Mchat<CR>', { desc = 'Mchat send' })
+vim.keymap.set({ 'n' }, '<leader>ms', ':Mselect<CR>', { desc = 'Mchat select' })
+vim.keymap.set({ 'n' }, '<leader>md', ':Mdelete<CR>', { desc = 'Mchat delete' })
